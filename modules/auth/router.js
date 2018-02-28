@@ -34,6 +34,10 @@ router.post('/login', function(req, res) {
         return res.status(500).send({ error: 'Something went wrong, please try later..!' });
       }
 
+      if(result.error) {
+        return res.status(403).send(result);
+      }
+
       return res.send(result);
     })
   } catch (err) {
