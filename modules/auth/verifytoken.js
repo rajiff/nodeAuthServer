@@ -1,9 +1,23 @@
+const jwt = require('jsonwebtoken');
 const logger = require('../../logger');
+const jwtSecret = require('./jwtSecret');
 
 module.exports = function (req, res, next) {
-	logger.debug('Intercepting the route to secured resources...');
+	logger.debug('Intercepting the route for authentication to secured resources...');
 
-	// @TBD verify the token on request object
+	let token = req.headers.authorization;
+	let secretOrPublicKey = jwtSecret;
+	let options = {
+		algorithm: 'HS256',
+		issuer: '@basavarajkn'
+	};
 
-	next();
+	jwt.verify(token, secretOrPublicKey, options, (err, result) => {
+		if(err) {
+			logger.error("Error in verifying token ERROR::", err);
+			return res.status(403).send({message: 'unauthorized'});
+		}
+
+		return next();
+	})
 }

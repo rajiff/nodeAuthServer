@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const logger = require('../../logger');
+const jwtSecret = require('./jwtSecret');
 
 module.exports = function(userObj, done) {
 	let payload = {
@@ -8,7 +10,7 @@ module.exports = function(userObj, done) {
 		role: userObj.role
 	};
 
-	let secretOrPrivateKey = "QuickBrownFoxJumpedOverTheLazyDog";
+	let secretOrPrivateKey = jwtSecret;
 
 	let options = {
 		algorithm: 'HS256',
