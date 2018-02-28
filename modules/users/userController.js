@@ -1,4 +1,4 @@
-const UserDAO = require('./userDAO');
+const userDAO = require('./userDAO');
 
 // SAVE
 const addNewUser = function(userObj, done) {

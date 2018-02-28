@@ -1,28 +1,53 @@
 const router = require('express').Router();
 const logger = require('../../logger');
+const authCtrl = require('./authController');
 
 router.post('/signup', function(req, res) {
-	logger.debug("Request received for signup..!");
+  logger.debug("Request received for signup..!");
 
-	// Add new user
+  try {
+    // Add new user
+    let userObj = req.body;
+    authCtrl.signup(userObj, (err, result) => {
+      if (err) {
+        logger.error("Error in signup ERROR::", err);
+        return res.status(500).send({ error: 'Something went wrong, please try later..!' });
+      }
 
-	res.send({message: 'you are now signedup'});
+      return res.send(result);
+    })
+  } catch (err) {
+    logger.error("Caught error in signup ERROR::", err);
+    return res.status(500).send({ error: 'Something went wrong, please try later..!' });
+  }
 });
 
 router.post('/login', function(req, res) {
-	logger.debug("Request received for login..!");
+  logger.debug("Request received for login..!");
 
-	// Find user, check the identity and generate token for authentication if identity matches
+  try {
+    // Find user, check the identity and generate token for authentication if identity matches
+    let credentials = req.body;
+    authCtrl.login(credentials, (err, result) => {
+      if (err) {
+        logger.error("Error in login ERROR::", err);
+        return res.status(500).send({ error: 'Something went wrong, please try later..!' });
+      }
 
-	res.send({message: 'you logged in'});
+      return res.send(result);
+    })
+  } catch (err) {
+    logger.error("Caught error in login ERROR::", err);
+    return res.status(500).send({ error: 'Something went wrong, please try later..!' });
+  }
 });
 
 router.post('/logout', function(req, res) {
-	logger.debug("Request received for logout..!");
+  logger.debug("Request received for logout..!");
 
-	// Destroy the token or do any cleanup if you want to do
+  // Destroy the token or do any cleanup if you want to do
 
-	res.send({message: 'you logged out'});
+  res.send({ message: 'you logged out' });
 });
 
 
