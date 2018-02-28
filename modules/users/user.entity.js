@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-enum USER_ROLES = [ 'admin', 'customer', 'support', 'vendor'];
+const USER_ROLES = [ 'admin', 'customer', 'support', 'vendor'];
 
 const UserSchema = new mongoose.Schema({
-	id: String,
 	username: { type: String, required: true, index: { unique: true }, trim: true },
 	hash_password: { type: String, required: true },
 	role: { type: String, enum: USER_ROLES, default: 'customer', required: true, index: true },
