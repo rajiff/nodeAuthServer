@@ -18,6 +18,15 @@ module.exports = function (req, res, next) {
 			return res.status(403).send({message: 'unauthorized'});
 		}
 
+		req.claims = {
+			user: {
+				username: result.unm,
+				firstName: result.fnm,
+				lastName: result.lnm,
+				role: result.rle
+			}
+		};
+
 		return next();
 	})
 }

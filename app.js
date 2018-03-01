@@ -2,10 +2,13 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const helmet = require('helmet');
 
 const mongoConn = require('./mongoConnection')();
 
 let app = express();
+
+app.use(helmet());
 
 // Configure morgan to log your requests, with a standard date & time format
 morgan.token('time', (req, res) => new Date().toISOString());

@@ -3,17 +3,18 @@ const logger = require('../../logger');
 const jwtSecret = require('./jwtSecret');
 
 module.exports = function(userObj, done) {
+	// Keep the payload compact
 	let payload = {
-		username: userObj.username,
-		firstName: userObj.firstName,
-		lastName: userObj.lastName,
-		role: userObj.role
+		unm: userObj.username,
+		fnm: userObj.firstName,
+		lnm: userObj.lastName,
+		rle: userObj.role
 	};
 
 	let secretOrPrivateKey = jwtSecret;
 
 	let options = {
-		algorithm: 'HS256',
+		algorithm: 'HS256', // Ensure option carries the algorithm required to sign/verify the token
 		expiresIn: (60 * 3),
 		issuer: '@basavarajkn'
 	};
