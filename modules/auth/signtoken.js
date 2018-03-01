@@ -18,5 +18,7 @@ module.exports = function(userObj, done) {
 		expiresIn: (60 * 3),
 		issuer: '@basavarajkn'
 	};
+
+	// Ensure algo is specified, else it can be any arbitrary string
 	jwt.sign(payload, secretOrPrivateKey, options, done);
 }

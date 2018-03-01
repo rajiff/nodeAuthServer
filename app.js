@@ -8,6 +8,7 @@ const mongoConn = require('./mongoConnection')();
 
 let app = express();
 
+// Put helmet on top of middleware it can verify all the request first
 app.use(helmet());
 
 // Configure morgan to log your requests, with a standard date & time format
@@ -27,7 +28,9 @@ app.use('/favicon.ico', function(req, res, next) {
 });
 
 app.use('/auth', require('./modules/auth'));
-app.use('/secure', require('./modules/auth/verifytoken'), require('./modules/securedResource'));
+app.use('/secure',
+	require('./modules/auth/verifytoken'),
+	require('./modules/securedResource'));
 
 app.use(function(req, res) {
 	res.status(404).send({message: 'Requested resource not found..!'});
